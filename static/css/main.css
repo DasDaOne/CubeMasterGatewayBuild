@@ -1,0 +1,120 @@
+﻿.unity-container.desktop {
+    height: 100%;
+    aspect-ratio: 9 / 16;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.unity-container.handheld {
+    height: 100%;
+    width: 100%;
+}
+
+#loading-cover{
+    background: linear-gradient(#87aed2, #eafefe);
+
+    top: 50%;
+    left: 50%;
+
+    height: 100%;
+    width: 100%;
+
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-y: hidden;
+}
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#unity-canvas{
+    height: 100%;
+    width: 100%;
+}
+
+#unity-loading-bar { 
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    left: 50%;
+    top: 75%;
+    transform: translate(-50%, -50%);
+}
+#unity-progress-bar-empty { 
+    text-align: left;
+
+    width: 75%;
+    height: 4%;
+
+    background-color: #779ebb;
+
+    border-radius: 4em;
+}
+
+#unity-logo {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+
+    pointer-events: none;
+
+    width: 50%;
+    height: 50%;
+
+    background: url('../img/cube-icon.png') center / contain no-repeat;
+}
+
+#unity-progress-bar-full { 
+    width: 25%;
+    height: 100%;
+    
+    border-radius: 4em;
+
+    background-color: #fefefe;
+}
+
+@font-face {
+    font-family: 'SourceSans';
+    src: url("../SourceSansPro-Black.otf") format('opentype');
+  }
+
+#loading-text{
+    margin-top: 1em;
+    font-size: 2em;
+    font-family: 'SourceSans';
+    color: #364957;
+    text-align: center;
+}
+
+
+@keyframes fake-loading {
+    0% {
+        width: 90%;
+
+    }
+
+    100% {
+        width: 100%;
+    }
+}

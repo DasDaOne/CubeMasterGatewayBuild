@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | CubeMaster</title>
+    <link rel="stylesheet" href="./static/css/main.css">
+
+
+    <script type="text/javascript" >
+        window.yandexMetricaCounterId = 98122898;
+    </script>
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(window.yandexMetricaCounterId, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/98122898" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <script type="text/javascript" >
+        ym(window.yandexMetricaCounterId,'reachGoal','pageOpen');
+
+        addEventListener('DOMContentLoaded', (event) => {
+            const pageLoadTime = performance.timing.domContentLoadedEventStart - performance.timing.navigationStart;
+            ym(window.yandexMetricaCounterId,'reachGoal','pageLoad', { pageLoadTime: pageLoadTime / 1000 });
+        });
+    </script>
+</head>
+<body style="text-align: center; padding: 0; border: 0; margin: 0;">
+<div class="unity-container">
+    <canvas id="unity-canvas"
+            style="background: #231F20"></canvas>
+</div>
+<div id="loading-cover">
+    <div id="unity-logo"></div>
+    <div id="unity-loading-bar">
+        <div id="unity-progress-bar-empty">
+            <div id="unity-progress-bar-full">
+            </div>
+        </div>
+        <span id="loading-text">Собираем кубики...</span>
+    </div>
+</div>
+
+
+    <script src="Build/9edd899bc6b6e0bbc4f46ff33ca0bba6.loader.js"></script>
+    <script>
+        const unityContainer = document.querySelector(".unity-container");
+        const canvas = document.querySelector("#unity-canvas");
+        var loadingCover = document.querySelector("#loading-cover");
+        var progressBarFull = document.querySelector("#unity-progress-bar-full");
+        var loadingText = document.querySelector("#loading-text");
+
+        if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+
+            var meta = document.createElement('meta');
+            meta.name = 'viewport';
+            meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+            document.getElementsByTagName('head')[0].appendChild(meta);
+            unityContainer.classList.add("handheld");
+            document.body.style.textAlign = "left";
+        } else {
+            unityContainer.classList.add("desktop");
+        }
+
+        var buildUrl = "Build";
+        var loaderUrl = buildUrl + "/9edd899bc6b6e0bbc4f46ff33ca0bba6.loader.js";
+        var config = {
+            dataUrl: buildUrl + "/3de2fc7d7df8de0dc6a6e3353c335671.data.br",
+            frameworkUrl: buildUrl + "/dc5dbbacb507fd1c1b887e5b7c2f78d4.framework.js.br",
+            codeUrl: buildUrl + "/cc860ab9d310fde5331df3eb0adff2cb.wasm.br",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "DefaultCompany",
+        productName: "CubeMaster",
+        productVersion: "0.1"
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const lang = urlParams.get('lang');
+        const unityStartLoadingTime = performance.now();
+        
+        loadingText.innerHTML = lang === "ru" ? "Собираем фигуры..." : "Creating shapes...";
+
+        const script = document.createElement("script");
+        script.src = loaderUrl;
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                progressBarFull.style.width = progress * 90 + "%";
+            }).then((unityInstance) => {
+                const unityEndLoadingTime = performance.now();
+                unityInstance.Module.errorHandler = (errorMessage) => {
+                    ym(window.yandexMetricaCounterId, 'reachGoal', 'unityGameCrash', {gameCrashError: errorMessage});
+                };
+                ym(window.yandexMetricaCounterId, 'reachGoal', 'unityStart', {unityLoadTime: (unityEndLoadingTime - unityStartLoadingTime) / 1000});
+            }).catch((errorMessage) => {
+                ym(window.yandexMetricaCounterId, 'reachGoal', 'unityLoadingCrash', {loadingCrashError: errorMessage});
+                alert(errorMessage);
+            });
+        };
+
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>
